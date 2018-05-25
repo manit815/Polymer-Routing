@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
 
 <dom-module id="my-view2">
   <template>
@@ -31,6 +32,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class MyView2 extends Polymer.Element {
+
+      constructor(){
+        super();
+        console.log(this.route);
+      }
       static get is() { return 'my-view2'; }
     }
 
