@@ -1,0 +1,31 @@
+<!-- Load the Polymer.Element base class -->
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+<dom-module id="my-test-view">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        padding: 16px;
+      }
+    </style>
+
+    <h1>Test view</h1>
+  </template>
+  <script>
+    // Your new element extends the Polymer.Element base class
+    class MyTestView extends Polymer.Element {
+      static get is() { return 'my-test-view'; }
+
+      ready() {
+          super.ready();
+          console.log(this.set('route.path', 'my-view404'));
+      }
+    }
+    //Now, register your new custom element so the browser can use it
+    customElements.define(MyTestView.is, MyTestView);
+  </script>
+</dom-module>
