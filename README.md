@@ -6,6 +6,7 @@ This repo contains how routing works in Polymer. Includes:
 - [iron-pages] - (https://www.webcomponents.org/element/PolymerElements/iron-pages)
 - [iron-selector] - (https://www.webcomponents.org/element/PolymerElements/iron-selector)
 - [iron-localstorage] - (https://www.webcomponents.org/element/PolymerElements/iron-localstorage)
+- [app-localize-behavior] - (https://www.webcomponents.org/element/PolymerElements/app-localize-behavior)
 
 Passing data across components using routing.
 
@@ -14,3 +15,4 @@ Passing data across components using routing.
 - Subroutes
 - Local storage using iron-localstorage
 - Service workers
+- Localization
