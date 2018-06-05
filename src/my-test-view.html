@@ -1,31 +1,71 @@
-<!-- Load the Polymer.Element base class -->
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
+
 
 <dom-module id="my-test-view">
-  <!-- Defines the element's style and local DOM -->
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         display: block;
 
-        padding: 16px;
+        padding: 10px;
       }
     </style>
 
-    <h1>Test view</h1>
+    <div class="card">
+      <div class="circle">1</div>
+      <h1>View Test</h1>
+      <div class="lang">
+        <span title="english">🇬🇧 EN</span>
+        <paper-toggle-button on-change="_toggle" id="switch"></paper-toggle-button>
+        <span title="french">FR 🇫🇷</span>
+        <div>{{localize('greeting')}}</div>
+      </div>
+      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
+      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      
+    </div>
   </template>
+
   <script>
-    // Your new element extends the Polymer.Element base class
-    class MyTestView extends Polymer.Element {
+    class MyTestView extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
       static get is() { return 'my-test-view'; }
 
-      ready() {
-          super.ready();
-          console.log(this.set('route.path', 'my-view404'));
+      // static get behaviors() {
+      //   return [Polymer.AppLocalizeBehavior]
+      // }
+
+      static get properties() {
+        return {
+          language: {
+            type: String,
+            value: 'en'
+          }
+        }
+      }
+
+      attached() {
+        console.log('inside attached function');
+        this.loadResources(this.resolveUrl('locales.json'));
+      }
+
+      _toggle() {
+        this.language = this.$.switch.checked ? 'fr': 'en';
       }
     }
-    //Now, register your new custom element so the browser can use it
-    customElements.define(MyTestView.is, MyTestView);
+
+    window.customElements.define(MyTestView.is, MyTestView);
   </script>
 </dom-module>

@@ -20,7 +20,9 @@
     "vaadin-grid": "^3.0.0",
     "paper-input": "^2.0.1",
     "paper-button": "^2.0.0",
-    "iron-localstorage": "PolymerElements/iron-localstorage#^2.1.1"
+    "iron-localstorage": "PolymerElements/iron-localstorage#^2.1.1",
+    "app-localize-behavior": "PolymerElements/app-localize-behavior#^2.0.1",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^2.1.1"
   },
   "resolutions": {
     "polymer": "^2.0",
