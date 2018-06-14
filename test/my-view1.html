@@ -30,13 +30,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </test-fixture>
 
     <script>
-      suite('my-view1 tests', function() {
+
+      suite('<my-view1>', function() {
+        var myView1;
+        var route;
+
+        setup(function(){
+          myView1 = fixture('BasicView');
+          stub('my-view1', {
+            _changeRoute: function(){
+              route = {'path':'/view2/123'};
+            }
+          })
+        });
+
         test('Number in circle should be 1', function() {
           var myView = fixture('BasicView');
           var circle = myView.shadowRoot.querySelector('.circle');
-          assert.equal(circle.textContent, '1');
+          expect(circle.textContent).to.equal('1');
         });
-      });
+
+        test('button value should be raised', function(){
+          var button = myView1.shadowRoot.querySelector('paper-button');
+          assert.equal(button.textContent, 'raised');
+        });
+
+        test('on button click changeRoute should be called', function(){
+          var button = myView1.shadowRoot.querySelector('paper-button'); 
+          button.click();
+          expect(myView1._changeRoute).to.be.called;
+        });
+
+        test('on button click route path should be /view2/123', function(){
+          var button = myView1.shadowRoot.querySelector('paper-button'); 
+          button.click();
+          expect(route.path).to.equal('/view2/123');
+        });
+      })
     </script>
   </body>
 </html>

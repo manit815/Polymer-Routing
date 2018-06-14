@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <title>Tests</title>
 
     <script src="../bower_components/web-component-tester/browser.js"></script>
+    <!-- <script src="../bower_components/iron-ajax/iron-ajax.html"></script> -->
   </head>
   <body>
     <script>
@@ -24,7 +25,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // Load 'my-view1.html' test suite, using native shadow dom
         'my-view1.html?dom=shadow',
         // Load 'my-view1.html' test suite, using shadydom
-        'my-view1.html?wc-shadydom=true',
+        // 'my-view1.html?wc-shadydom=true',
+        'my-grid.html?dom=shadow',
+        // 'my-grid.html?wc-shadydom=true'
       ]);
     </script>
   </body>

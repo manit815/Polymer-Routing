@@ -1,0 +1,78 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-grid</title>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../src/my-grid.html">
+  </head>
+  <body>
+    <test-fixture id="GridView">
+      <template>
+        <my-grid></my-grid>
+      </template>
+    </test-fixture>
+
+    <script>
+        suite('<my-grid>', function () {
+            var testElement;
+            var server;
+            var responseHeaders = {
+                json: { 'Content-Type': 'application/json' },
+                plain: { 'Content-Type': 'text/plain' }
+            };
+            var request;
+            var ajax;
+            setup(function () {
+                server = sinon.fakeServer.create();
+                server.respondWith('GET', 'https://demo.vaadin.com/demo-data/1.0/people?count=20', [
+                    200,
+                    responseHeaders.json,
+                    '[{"var1": "9a","var2": "17n"}]'
+                ]);
+                
+            });
+            teardown(function () {
+                server.restore();
+            });
+            suite('testSuite', function () {
+
+                setup(function(){
+                    testElement = fixture("GridView");
+                    ajax = testElement.shadowRoot.querySelector('iron-ajax');
+                });
+                test('should have the correct object', function () {
+                    request = ajax.generateRequest();
+                    server.respond();
+                    expect(request.response).to.be.ok;
+                    expect(request.response).to.be.an('Array');
+                    expect(request.response[0].var1).to.equal('9a');
+                    expect(request.response[0].var2).to.equal('17n');
+                });
+
+                test('should be a GET request', function(){
+                    request = ajax.generateRequest();
+                    expect(request.xhr.method).to.be.equal('GET');
+                });
+            });
+        });
+    </script>
+
+    
+  </body>
+</html>
