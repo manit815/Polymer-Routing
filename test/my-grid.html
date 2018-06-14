@@ -28,6 +28,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </test-fixture>
 
+    <test-fixture id="post">
+        <template>
+            <iron-ajax method="POST" url="/respond-to-post"></iron-ajax>
+        </template>
+    </test-fixture>
+
     <script>
         suite('<my-grid>', function () {
             var testElement;
@@ -45,6 +51,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     responseHeaders.json,
                     '[{"var1": "9a","var2": "17n"}]'
                 ]);
+
+                server.respondWith('POST','/respond-to-post', [
+                    200, 
+                    responseHeaders.json, 
+                    '{"post_success": true}']);
                 
             });
             teardown(function () {
@@ -68,6 +79,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 test('should be a GET request', function(){
                     request = ajax.generateRequest();
                     expect(request.xhr.method).to.be.equal('GET');
+                });
+            });
+
+            suite('post-testSuite', function(){
+                
+                setup(function(){
+                    ajax = fixture('post');
+                });
+
+                test('should be a POST request', function(){
+                    request = ajax.generateRequest();
+                    expect(request.xhr.method).to.equal('POST');
+                });
+
+                test('response should contain a valid object', function(){
+                    request = ajax.generateRequest();
+                    server.respond();
+                    expect(request.response).to.be.ok;
+                    expect(request.response).to.be.an('object');
+                    expect(request.response.post_success).to.equal(true);
                 });
             });
         });
